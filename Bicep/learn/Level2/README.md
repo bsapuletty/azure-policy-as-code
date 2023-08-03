@@ -55,12 +55,13 @@ az login
 az account list
 
 # required steps - deploy to devtest
-az account set -s 'xxxx-xxxx-xxxx-xxxx-xxxx'
-az deployment sub create -f ./main.bicep -l australiaeast -p ./params-devtest.json
+az account set -s 'fbe99a9d-d594-494c-a853-366209b734ba'
+az deployment sub create -f ./main.bicep -l westeurope -p ./params-devtest.json
 
 # required steps - deploy to nonprod
-az account set -s 'xxxx-xxxx-xxxx-xxxx-xxxx'
-az deployment sub create -f ./main.bicep -l australiaeast -p ./params-nonprod.json
+az login
+az account set -s 'fbe99a9d-d594-494c-a853-366209b734ba'
+az deployment sub create -f ./main.bicep -l westeurope -p ./params-nonprod.json
 
 # optional step to trigger a subscription-level policy compliance scan (uses current sub context)
 az policy state trigger-scan --no-wait

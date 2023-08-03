@@ -18,13 +18,15 @@
 **Defaults**
 ```bicep
 param policySource string = 'globalbao/azure-policy-as-code'
+// Custom refers to Type and Category type in Azure portal
 param policyCategory string = 'Custom'
 param assignmentEnforcementMode string = 'Default'
 param listOfAllowedLocations array = [
-  'eastus'
-  'eastus2'
-  'westus'
-  'westus2'
+  'westeurope'
+  //'eastus'
+  //'eastus2'
+  //'westus'
+  //'westus2'
 ]
 param listOfAllowedSKUs array = [
   'Standard_B1ls'
@@ -47,8 +49,13 @@ az bicep build -f ./main.bicep
 
 # required steps
 az login
-az deployment sub create -f ./main.bicep -l australiaeast
-
+# sub reference to subscription. Can also be management group ... westeurope refers to region 
+# Manage Azure Resource Manager template deployment at subscription scope.
+az account set --subscription 'subscriptionid'
+az deployment sub create -f ./main.bicep -l westeurope
+# Delete a deployment
+az deployment sub list
+az deployment sub delete --name nameofdeployment
 # optional step to trigger a subscription-level policy compliance scan 
 az policy state trigger-scan --no-wait
 ```

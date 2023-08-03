@@ -12,12 +12,16 @@ on:
   - cron: "0 0 * * *" #at the end of every day
     
 jobs:
-
+# runs on pull and push
   Bicep-CI:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: Bicep CI
+    # community Github action to build ARM of Bicep files
+    # It runs the az bicep build --file main.bicep 
+    # The build command converts a Bicep file to an Azure Resource Manager template (ARM template).
+    # Typically, you don't need to run this command because it runs automatically when you deploy a Bicep file.
       uses: aliencube/bicep-build-actions@v0.1
       with:
         files: ./Bicep/Level3/main.bicep
