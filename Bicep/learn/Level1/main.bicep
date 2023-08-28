@@ -9,7 +9,7 @@ targetScope = 'subscription'
 
 // PARAMETERS
 // Deze parameters zijn voor het description veld in Policy Initiative in Azure Portal
-param policySource string = 'globalbao/azure-policy-as-code'
+//param policySource string = 'globalbao/azure-policy-as-code'
 param policySource string = 'bsapuletty/azure-policy-as-code'
 '
 param policyCategory string = 'Custom'
