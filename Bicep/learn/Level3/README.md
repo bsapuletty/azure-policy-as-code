@@ -9,7 +9,7 @@
 * Targeting multiple Azure environments with authentication via GitHub secrets
 * Uses parameter files for environment-specfic values passed during deployment
 
-[YouTube Video Timestamp 1h 11m 45s](https://www.youtube.com/watch?v=qpnMJXw6pIg&t=1h11m45s)
+[YouTube Video Timestamp 1h 11m 45s](https://www.youtube.com/watch?v=qpnMJg&tXw6pI=1h11m45s)
 
 ## Minimum Prerequisities
 

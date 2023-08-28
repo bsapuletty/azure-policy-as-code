@@ -7,8 +7,7 @@
         },
         "listOfAllowedLocations": {
             "value": [
-                "australiaeast",
-                "australiasoutheast"
+                "westeurope"
             ]
         },
         "listOfAllowedSKUs": {
@@ -25,7 +24,7 @@
             ]
         },
         "assignmentIdentityLocation": {
-            "value": "australiaeast"
+            "value": "westeurope"
         },
         "mandatoryTag1Value": {
             "value": "NonProd"

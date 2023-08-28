@@ -1,9 +1,9 @@
+//Custom policy. Bicep code uses paramter file for flexibility
 targetScope = 'subscription'
-
 // PARAMETERS
 param policySource string = 'globalbao/azure-policy-as-code'
 param policyCategory string = 'Custom'
-param assignmentIdentityLocation string //level2
+param assignmentIdentityLocation string //level2 difference with level1
 param mandatoryTag1Key string = 'BicepTagName' //level2
 param mandatoryTag1Value string //level2
 param assignmentEnforcementMode string = 'Default'
@@ -27,13 +27,13 @@ var assignment1Name = 'Initiative1'
 var initiative2Name = 'Initiative2' //level2
 var assignment2Name = 'Initiative2' //level2
 
-// OUTPUTS
+// OUTPUTS for structure. When you have more bicep files, than you use
 output initiative1ID string = initiative1.id
 output initiative2ID string = initiative2.id //level2
 output assignment1ID string = assignment1.id
 output assignment2ID string = assignment2.id //level2
 
-// RESOURCES
+// Custom policies with the chosen name 'policy'
 resource policy 'Microsoft.Authorization/policyDefinitions@2020-09-01' = {
   //level2
   name: 'addTagToRG'
@@ -73,6 +73,7 @@ resource policy 'Microsoft.Authorization/policyDefinitions@2020-09-01' = {
             equals: 'Microsoft.Resources/subscriptions/resourceGroups'
           }
           {
+            // Als tagName 'BicepTagName' niet bestaat, than false en voer effect modify uit
             field: '[concat(\'tags[\', parameters(\'tagName\'), \']\')]'
             exists: 'false'
           }
@@ -82,7 +83,8 @@ resource policy 'Microsoft.Authorization/policyDefinitions@2020-09-01' = {
         effect: 'modify'
         details: {
           roleDefinitionIds: [
-            '/providers/microsoft.authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c'
+            // because of modify effect we need a managed identity with the contributor role
+            '/providers/microsoft.authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c' 
           ]
           operations: [
             {
@@ -96,7 +98,7 @@ resource policy 'Microsoft.Authorization/policyDefinitions@2020-09-01' = {
     }
   }
 }
-
+//for built-in policy
 resource initiative1 'Microsoft.Authorization/policySetDefinitions@2020-09-01' = {
   name: initiative1Name
   properties: {
@@ -162,7 +164,7 @@ resource initiative1 'Microsoft.Authorization/policySetDefinitions@2020-09-01' =
     ]
   }
 }
-
+// for custom policy
 resource initiative2 'Microsoft.Authorization/policySetDefinitions@2020-09-01' = {
   //level2
   name: initiative2Name
@@ -194,6 +196,7 @@ resource initiative2 'Microsoft.Authorization/policySetDefinitions@2020-09-01' =
     policyDefinitions: [
       {
         //Add tag to resource group
+        //reference to policy (name given to policy resource above)
         policyDefinitionId: policy.id
         parameters: {
           tagName: {
@@ -207,7 +210,7 @@ resource initiative2 'Microsoft.Authorization/policySetDefinitions@2020-09-01' =
     ]
   }
 }
-
+//for built-in policy
 resource assignment1 'Microsoft.Authorization/policyAssignments@2020-09-01' = {
   name: assignment1Name
   properties: {
@@ -229,13 +232,13 @@ resource assignment1 'Microsoft.Authorization/policyAssignments@2020-09-01' = {
     }
   }
 }
-
+// for custom policy
 resource assignment2 'Microsoft.Authorization/policyAssignments@2020-09-01' = {
   //level2
   name: assignment2Name
-  location: assignmentIdentityLocation
+  location: assignmentIdentityLocation // is passed in from jason file params-devtest.jason
   identity: {
-    type: 'SystemAssigned'
+    type: 'SystemAssigned' // a system assigned identity is used in case of a modification
   }
   properties: {
     displayName: assignment2Name
