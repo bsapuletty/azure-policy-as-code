@@ -8,12 +8,12 @@ targetScope = 'subscription'
 //}
 
 // PARAMETERS
-// Deze parameters zijn voor het description veld in Policy Initiative in Azure Portal
+// Deze parameters zijn voor het description veld in Policy Initiative in Azure Portal (waat komt de poilcy vandaan)
 //param policySource string = 'globalbao/azure-policy-as-code'
 param policySource string = 'bsapuletty/azure-policy-as-code'
 '
 param policyCategory string = 'Custom'
-// Enforcement = default: during resource creation
+// Enforcement = default: policy will be enforced
 // Enforcement = DoNotEnforce: The policy effect isn't enforced during resource creation or update
 // Enforcement =  deployIfNotExists: Remediation tasks can be started for deployIfNotExists policies
 // The optional overrides property allows you to change the effect of a policy definition without modifying the underlying policy definition or using a parameterized effect in the policy definition.
@@ -41,22 +41,26 @@ param listOfAllowedSKUs array = [
 var initiative1Name = 'Initiative1'
 var assignment1Name = 'Initiative1'
 
-// OUTPUTS. No definitions because this is a built-in policy
+// OUTPUTS. No resource definitions because this is uses a  built-in policy and not a custom policy. Output is not used but is a good
+// common practise to define
 output initiative1ID string = initiative1.id
 output assignment1ID string = assignment1.id
 
-// RESOURCES initiative is same as policyset. Afer @ is the API version
-// define te Initiative
+// RESOURCES initiative is same as policyset. It is a grouping of policies. Afer @ is the API version
+// DEFINE the Initiative
 resource initiative1 'Microsoft.Authorization/policySetDefinitions@2020-09-01' = {
   name: initiative1Name
   properties: {
     // Custom refers to Type and Category type in Azure portal
     policyType: 'Custom'
     displayName: initiative1Name
+    // For policy source, see description in policy in Azure portal
     description: '${initiative1Name} via ${policySource}'
     metadata: {
+      // category is a collomn in the azure portal for assigning the policy to a (new) catagory
       category: policyCategory
       // source: repo name (is only a marker/comment)
+      // source is reference to source code location (see above).
       source: policySource
       version: '0.1.0'
     }
@@ -78,7 +82,7 @@ resource initiative1 'Microsoft.Authorization/policySetDefinitions@2020-09-01' =
         })
       }
     }
-    // Define the policies
+    // Define the policies definitions passed in to this initiative 
     policyDefinitions: [
       {
         //Allowed locations for resource groups. the definition e765b5de-1225-4ba3-bd56-1ac6695af988 relates to "Allowed Locations" for a built-in ID
@@ -126,7 +130,7 @@ resource assignment1 'Microsoft.Authorization/policyAssignments@2020-09-01' = {
       source: policySource
       version: '0.1.0'
     }
-    policyDefinitionId: initiative1.id // Reference a policy specified in the same Bicep file
+    policyDefinitionId: initiative1.id // Reference to the policy initiative id specified in this Bicep file
     parameters: {
       listOfAllowedLocations: {
         value: listOfAllowedLocations

@@ -11,6 +11,7 @@ i.	git fetch upstream (original repo)
 ii.	git checkout master (fork master)
 iii.	git merge upstream master (merge changes into fork from master)
 4.	Make changes to local repo
+a.  git status
 5.	Appl changes:
 a.	git add .
 b.	git commit -m “changes”
