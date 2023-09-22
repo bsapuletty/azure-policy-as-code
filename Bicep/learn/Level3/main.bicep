@@ -1,7 +1,7 @@
 targetScope = 'subscription'
 
 // PARAMETERS
-param policySource string = 'globalbao/azure-policy-as-code'
+param policySource string = 'bsapuletty/azure-policy-as-code'
 param policyCategory string = 'Custom'
 param assignmentEnforcementMode string = 'Default'
 param assignmentIdentityLocation string = 'australiaeast'

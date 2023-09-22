@@ -1,7 +1,7 @@
 //Custom policy. Bicep code uses paramter file for flexibility
 targetScope = 'subscription'
 // PARAMETERS
-param policySource string = 'globalbao/azure-policy-as-code'
+param policySource string = 'bsapuletty/azure-policy-as-code'
 param policyCategory string = 'Custom'
 param assignmentIdentityLocation string //level2 difference with level1
 param mandatoryTag1Key string = 'BicepTagName' //level2
