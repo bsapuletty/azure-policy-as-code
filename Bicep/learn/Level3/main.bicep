@@ -32,7 +32,7 @@ module definitions './r_definitions.bicep' = {
     mandatoryTag1Value: mandatoryTag1Value
   }
 }
-
+// Paramters are passed in here and passed out to definition module
 module initiatives './r_initiatives.bicep' = {
   name: 'initiatives'
   params: {
@@ -43,7 +43,7 @@ module initiatives './r_initiatives.bicep' = {
     customPolicyID: definitions.outputs.policyID
   }
 }
-
+// Paramters are passed in here and passed out to initiatives module
 module assignments './r_assignments.bicep' = {
   name: 'assignments'
   params: {
