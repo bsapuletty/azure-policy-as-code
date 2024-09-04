@@ -1,18 +1,18 @@
 name: Bicep-CD
+# Run script on push to Github
 on:
   push:
   # push to main branch
     branches: [ main ]
-    # only when bicep files are ajusted
+  # only when bicep files are ajusted
     paths:
     - '**.bicep'
+    // use dispatch if something is updated outside your development work bench
   workflow_dispatch:
-#   schedule:
-# run outside Azure to be sure that job runs in case something changes within Azure or policies and job fails (unnoticed)
+#   schedule: run outside Azure to be sure that job runs in case something changes within Azure or policies and job fails (unnoticed)
 #   - cron: "0 0 * * *" #at the end of every day
-    
+# Trigger what on push (or pull-request)    
 jobs:
-
   DEVTEST-BICEP-CD:
     runs-on: ubuntu-latest
     steps:
@@ -33,13 +33,13 @@ jobs:
       with:
         inlineScript: |
           az deployment sub create -n devtest-bicep-cd -f ./Bicep/Level3/main.bicep -l australiaeast -p ./Bicep/Level3/params-devtest.json -o none
-    # Sleep job that runs when inital deployment job fails. skipp if successfull
+    # Sleep step that runs when step bicepCDfails. skip if successfull
     - name: Sleep for 30s
-      if: ${{ steps.bicepCD.outcome == 'failure' && steps.bicepCD.conclusion == 'success' }}
+       if: ${{ steps.bicepCD.outcome == 'failure' && steps.bicepCD.conclusion == 'success' }}
       uses: juliangruber/sleep-action@v1
       with:
         time: 30s # in case policies has not been updated yet.
-    # Sleep job that runs when inital deployment job fails
+    # Retry step that runs when step bicepCDfails. skip if successfull
     - name: Bicep CD Retry
       if: ${{ steps.bicepCD.outcome == 'failure' && steps.bicepCD.conclusion == 'success' }}
       uses: azure/CLI@v1

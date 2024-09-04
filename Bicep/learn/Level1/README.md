@@ -3,7 +3,7 @@
 * Uses built-in policies
 * Uses an initiative and assignment
 * 1x main.bicep
-* Manual CLI deployment
+* This will do a manual CLI deployment
 
 [YouTube Video Timestamp 16m 10s](https://www.youtube.com/watch?v=qpnMJXw6pIg&t=16m10s)
 
