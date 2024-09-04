@@ -1,0 +1,27 @@
+About pull requests
+
+About pull requests
+1.	Github: Fork the project to you repo
+2.	Clone: git clone “your repo” it to your local repo
+3.	Pull changes in original project:  
+a.	Add remote repo: git remote add upstream “name of original repo”
+b.	Check it: git remote -v  (origin=is the fork, upstream=the original)
+c.	Merge changes into fork: 
+i.	git fetch upstream (original repo)
+ii.	git checkout master (fork master)
+iii.	git merge upstream master (merge changes into fork from master)
+4.	Make changes to local repo
+a.  git status
+5.	Appl changes:
+a.	git add .
+b.	git commit -m 
+b1. Check your current branch: git  (to change your branch: git checkout "new branch name")
+c.	git push 
+6.	Go back to github.com
+a.	Go to your fork repo
+b.	Go to code and click on the hash (look @ diff )
+c.	Go back to original repo and click “ new pull request” and click “compare across forks” 
+d.	Select head=fork repo and base=orginal repo
+e.	Leave comments and create pull request (optinal add reviewers, assign)
+f.	If evrything is ok click “merge pull request”
+

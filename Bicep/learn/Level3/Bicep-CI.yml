@@ -22,6 +22,7 @@ jobs:
     # It runs the az bicep build --file main.bicep 
     # The build command converts a Bicep file to an Azure Resource Manager template (ARM template).
     # Typically, you don't need to run this command because it runs automatically when you deploy a Bicep file.
+    # You can use it to validate that Bicep file is correct
       uses: aliencube/bicep-build-actions@v0.1
       with:
         files: ./Bicep/Level3/main.bicep

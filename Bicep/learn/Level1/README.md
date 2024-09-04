@@ -3,7 +3,7 @@
 * Uses built-in policies
 * Uses an initiative and assignment
 * 1x main.bicep
-* Manual CLI deployment
+* This will do a manual CLI deployment
 
 [YouTube Video Timestamp 16m 10s](https://www.youtube.com/watch?v=qpnMJXw6pIg&t=16m10s)
 
@@ -44,10 +44,10 @@ param listOfAllowedSKUs array = [
 ## Deployment Steps
 
 ```s
-# optional step to view the JSON/ARM template
+# optional step to view the JSON/ARM template. Good for trouble shooting
 az bicep build -f ./main.bicep
 
-# required steps
+# required steps (in production ue a service principle)
 az login
 # sub reference to subscription. Can also be management group ... westeurope refers to region 
 # Manage Azure Resource Manager template deployment at subscription scope.

@@ -1,7 +1,7 @@
 //Custom policy. Bicep code uses paramter file for flexibility
 targetScope = 'subscription'
 // PARAMETERS
-param policySource string = 'globalbao/azure-policy-as-code'
+param policySource string = 'bsapuletty/azure-policy-as-code'
 param policyCategory string = 'Custom'
 param assignmentIdentityLocation string //level2 difference with level1
 param mandatoryTag1Key string = 'BicepTagName' //level2
@@ -29,12 +29,13 @@ var assignment2Name = 'Initiative2' //level2
 
 // OUTPUTS for structure. When you have more bicep files, than you use
 output initiative1ID string = initiative1.id
-output initiative2ID string = initiative2.id //level2
+output initiative2ID string = initiative2.id //
+// Out not used. We use a single BICEP file
 output assignment1ID string = assignment1.id
 output assignment2ID string = assignment2.id //level2
 
-// Custom policies with the chosen name 'policy'
-resource policy 'Microsoft.Authorization/policyDefinitions@2020-09-01' = {
+// Below the custom policy with the chosen name 'policy'
+resource policy 'Microsoft.Authorization/policyDefinitions@2021-06-01' = {
   //level2
   name: 'addTagToRG'
   properties: {
@@ -65,6 +66,7 @@ resource policy 'Microsoft.Authorization/policyDefinitions@2020-09-01' = {
         defaultValue: 'tempvalue'
       }
     }
+// DEFINE the condition   
     policyRule: {
       if: {
         allOf: [
@@ -83,7 +85,7 @@ resource policy 'Microsoft.Authorization/policyDefinitions@2020-09-01' = {
         effect: 'modify'
         details: {
           roleDefinitionIds: [
-            // because of modify effect we need a managed identity with the contributor role
+            // because of modify effect we need a managed identity with the contributor RBAC role
             '/providers/microsoft.authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c' 
           ]
           operations: [
